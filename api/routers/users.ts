@@ -6,17 +6,21 @@ const usersRouter = express.Router();
 
 usersRouter.post('/', async (req, res, next) => {
   try {
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.username || !req.body.password || !req.body.displayName || !req.body.phone) {
       return res.status(400).send({
         errors: {
           username: !req.body.username ? {message: 'Username is required!'} : null,
           password: !req.body.password ? {message: 'Password is required!'} : null,
+          displayName: !req.body.displayName ? {message: 'Display name is required!'} : null,
+          phone: !req.body.phone ? {message: 'Phone is required!'} : null,
         },
       });
     }
     const user = new User({
       username: req.body.username,
       password: req.body.password,
+      displayName: req.body.displayName,
+      phone: req.body.phone,
     });
 
     user.generateToken();
