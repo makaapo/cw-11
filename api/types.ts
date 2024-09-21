@@ -1,4 +1,4 @@
-import {Model} from 'mongoose';
+import mongoose, {Model} from 'mongoose';
 
 export interface UserFields {
   username: string;
@@ -14,3 +14,12 @@ export interface UserMethods {
 }
 
 export type UserModel = Model<UserFields, {}, UserMethods>;
+
+export interface ProductMutation {
+  user: mongoose.Types.ObjectId;
+  category: mongoose.Types.ObjectId;
+  title: string;
+  description: string;
+  price: number;
+  image: string | null;
+}
