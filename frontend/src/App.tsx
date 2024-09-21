@@ -3,7 +3,8 @@ import {Container, Typography} from '@mui/material';
 import Home from './features/Home/Home';
 import Register from './features/User/Register';
 import Login from './features/User/Login';
-import AppToolbar from './UI/AppToolbar.tsx';
+import AppToolbar from './UI/AppToolbar/AppToolbar';
+import NewProduct from './features/Products/NewProduct/NewProduct';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/products/new-product" element={<NewProduct />} />
           <Route path="*" element={<Typography variant="h1">Not found</Typography>} />
         </Routes>
       </Container>

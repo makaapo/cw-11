@@ -1,8 +1,8 @@
 import {AppBar, Grid, styled, Toolbar, Typography} from '@mui/material';
 import {Link} from 'react-router-dom';
 import UserMenu from './UserMenu';
-import {useAppSelector} from '../app/hooks';
-import {selectUser} from '../features/User/usersSlice';
+import {useAppSelector} from '../../app/hooks';
+import {selectUser} from '../../features/User/usersSlice';
 import AnonymousMenu from './AnonymousMenu';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 
