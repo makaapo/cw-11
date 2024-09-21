@@ -14,12 +14,9 @@ productsRouter.get('/', async (req, res, next) => {
     if (req.query.category) {
       products = await Product.find({category: req.query.category});
     } else {
-      products = await Product.find(
-        {
-          category: req.query.category,
-        },
-      );
+      products = await Product.find();
     }
+
     return res.send(products);
   } catch (e) {
     return next(e);

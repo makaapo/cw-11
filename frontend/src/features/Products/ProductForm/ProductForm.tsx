@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Grid, MenuItem, TextField} from '@mui/material';
+import {Box, Button, CircularProgress, Grid, MenuItem, TextField} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {useNavigate} from 'react-router-dom';
 import {ProductMutation} from '../../../types';
 import {selectCategories} from '../../Categories/categoriesSlice';
 import FileInput from '../../../UI/FileInput/FileInput';
 import {fetchCategories} from '../../Categories/categoriesThunks';
+import {selectProductCreating} from '../productSlice';
+import {createProduct} from '../productThunks';
 
 const ProductForm: React.FC = () => {
   const navigate = useNavigate();
   const categories = useAppSelector(selectCategories);
   const dispatch = useAppDispatch();
+  const creating = useAppSelector(selectProductCreating);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -44,6 +47,7 @@ const ProductForm: React.FC = () => {
 
   const onSubmitPost = async (event: React.FormEvent) => {
     event.preventDefault();
+    await dispatch(createProduct(state)).unwrap();
     navigate('/');
   };
 
@@ -113,9 +117,10 @@ const ProductForm: React.FC = () => {
           </Grid>
           <Grid item xs={3} textAlign="center">
             <Button
+              disabled={creating}
               variant="contained"
               type="submit">
-              Create Product
+              {creating ? <CircularProgress size={24}/> : 'Create Product'}
             </Button>
           </Grid>
         </Grid>

@@ -46,4 +46,29 @@ export interface Category {
   title: string;
 }
 
+export interface Product {
+  _id: string;
+  title: string;
+  image: string;
+  price: number;
+}
+
+export interface ProductInfo {
+  _id: string;
+  user: {
+    _id: string;
+    displayName: string;
+    phone: string;
+    token: string;
+  };
+  category: {
+    _id: string;
+    title: string;
+  };
+  title: string;
+  description: string;
+  price: number;
+  image: string;
+}
+
 

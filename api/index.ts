@@ -15,7 +15,7 @@ app.use(express.static('public'));
 
 app.use('/users', usersRouter);
 app.use('/categories', categoriesRouter);
-app.use('products', productsRouter);
+app.use('/products', productsRouter);
 
 const run = async () => {
   await mongoose.connect(config.database);
