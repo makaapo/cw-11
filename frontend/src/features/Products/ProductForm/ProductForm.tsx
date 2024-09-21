@@ -1,24 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Button, CircularProgress, Grid, MenuItem, TextField} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import {useNavigate} from 'react-router-dom';
 import {ProductMutation} from '../../../types';
 import {selectCategories} from '../../Categories/categoriesSlice';
 import FileInput from '../../../UI/FileInput/FileInput';
 import {fetchCategories} from '../../Categories/categoriesThunks';
 import {selectProductCreating} from '../productSlice';
-import {createProduct} from '../productThunks';
 
-const ProductForm: React.FC = () => {
-  const navigate = useNavigate();
+
+interface Props {
+  onSubmit: (products: ProductMutation) => void;
+}
+
+const ProductForm: React.FC<Props> = ({onSubmit}) => {
   const categories = useAppSelector(selectCategories);
   const dispatch = useAppDispatch();
   const creating = useAppSelector(selectProductCreating);
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
-
   const [state, setState] = useState<ProductMutation>({
     category: '',
     title: '',
@@ -26,6 +23,10 @@ const ProductForm: React.FC = () => {
     price: '',
     image: null,
   });
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
@@ -47,8 +48,7 @@ const ProductForm: React.FC = () => {
 
   const onSubmitPost = async (event: React.FormEvent) => {
     event.preventDefault();
-    await dispatch(createProduct(state)).unwrap();
-    navigate('/');
+    onSubmit({...state});
   };
 
   return (

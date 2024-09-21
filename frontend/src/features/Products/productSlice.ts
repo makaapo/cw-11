@@ -1,9 +1,9 @@
-import {Product, ProductInfo} from '../../types';
+import {ProductInfo} from '../../types';
 import {createSlice} from '@reduxjs/toolkit';
-import {createProduct, deleteProduct, fetchByCategory, fetchOneProduct, fetchProducts} from './productThunks';
+import {createProduct, deleteProduct, fetchOneProduct, fetchProducts} from './productThunks';
 
 interface ProductsState {
-  items: Product[];
+  items: ProductInfo[];
   item: ProductInfo | null;
   fetchLoading: boolean;
   fetchOneLoading: boolean;
@@ -34,18 +34,6 @@ export const productsSlice = createSlice({
         state.items = products;
       })
       .addCase(fetchProducts.rejected, (state) => {
-        state.fetchLoading = false;
-      });
-
-    builder
-      .addCase(fetchByCategory.pending, (state) => {
-        state.fetchLoading = true;
-      })
-      .addCase(fetchByCategory.fulfilled, (state, {payload: products}) => {
-        state.fetchLoading = false;
-        state.items = products;
-      })
-      .addCase(fetchByCategory.rejected, (state) => {
         state.fetchLoading = false;
       });
 

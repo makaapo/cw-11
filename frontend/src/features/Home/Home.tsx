@@ -1,8 +1,10 @@
+import ProductsPage from '../Products/ProductPage/ProductPage';
+
 const Home = () => {
 
   return (
     <>
-      Home
+      <ProductsPage/>
     </>
   );
 };

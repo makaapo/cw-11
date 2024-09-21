@@ -46,12 +46,6 @@ export interface Category {
   title: string;
 }
 
-export interface Product {
-  _id: string;
-  title: string;
-  image: string;
-  price: number;
-}
 
 export interface ProductInfo {
   _id: string;

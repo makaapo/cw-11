@@ -1,24 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {Product, ProductInfo, ProductMutation} from '../../types';
+import {ProductInfo, ProductMutation} from '../../types';
 import axiosApi from '../../axiosApi';
 import {RootState} from '../../app/store';
 
-export const fetchProducts = createAsyncThunk<Product[]>(
+export const fetchProducts = createAsyncThunk<ProductInfo[], string | undefined>(
   'products/fetchAll',
-  async () => {
-    const {data: product} = await axiosApi.get<Product[]>('products');
-    return product;
-  },
-);
-
-export const fetchByCategory = createAsyncThunk<Product[], string>(
-  'products/fetchByCategory',
-  async (category) => {
-    const {data: product} = await axiosApi.get<Product[]>(
-      `/products=` + category,
-    );
-
-    return product;
+  async (categoryId) => {
+    const { data: products } = await axiosApi.get<ProductInfo[]>(`/products`, { params: { category: categoryId } });
+    return products;
   },
 );
 
@@ -31,9 +20,9 @@ export const fetchOneProduct = createAsyncThunk<ProductInfo | null, string>(
     return productInfo;
   },
 );
-
-export const createProduct = createAsyncThunk<void, ProductMutation, {state: RootState} >(
-  'products/createProduct', async (product, {getState}) => {
+export const createProduct = createAsyncThunk<void, ProductMutation, {state: RootState}
+>('posts/createProduct', async (product, {getState}) => {
+  try {
     const token = getState().users.user?.token;
 
     const formData = new FormData();
@@ -46,10 +35,13 @@ export const createProduct = createAsyncThunk<void, ProductMutation, {state: Roo
     if (product.image) {
       formData.append('image', product.image);
     }
-
-    await axiosApi.post('/products', formData, {
+    await axiosApi.post('products', formData, {
       headers: {'Authorization': `Bearer ${token}`},
     });
+  } catch (e) {
+
+    throw e;
+  }
 });
 
 export const deleteProduct = createAsyncThunk<
@@ -58,6 +50,7 @@ export const deleteProduct = createAsyncThunk<
   { state: RootState }
 >('products/delete', async (id, {getState}) => {
   const token = getState().users.user?.token;
+  console.log(token);
   await axiosApi.delete(`/products/${id}`, {
     headers: {'Authorization': `Bearer ${token}`},
   });
