@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Button, Grid, MenuItem, TextField} from '@mui/material';
-import { useAppSelector} from '../../../app/hooks';
-import { useNavigate } from 'react-router-dom';
-import { ProductMutation } from '../../../types';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
+import {useNavigate} from 'react-router-dom';
+import {ProductMutation} from '../../../types';
 import {selectCategories} from '../../Categories/categoriesSlice';
 import FileInput from '../../../UI/FileInput/FileInput';
+import {fetchCategories} from '../../Categories/categoriesThunks';
 
 const ProductForm: React.FC = () => {
   const navigate = useNavigate();
   const categories = useAppSelector(selectCategories);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const [state, setState] = useState<ProductMutation>({
     category: '',
