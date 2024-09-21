@@ -4,6 +4,7 @@ import UserMenu from './UserMenu';
 import {useAppSelector} from '../app/hooks';
 import {selectUser} from '../features/User/usersSlice';
 import AnonymousMenu from './AnonymousMenu';
+import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 
 const StyledLink = styled(Link)({
   color: 'inherit',
@@ -21,7 +22,9 @@ const AppToolbar = () => {
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h4" component="div" sx={{flexGrow: 1}}>
-              <StyledLink to="/">Lalafo</StyledLink>
+              <StyledLink to="/">
+                <LocalGroceryStoreIcon /> LaLaFo
+              </StyledLink>
             </Typography>
           </Grid>
           {user ? (<UserMenu user={user}/>) : (<AnonymousMenu/>)}
